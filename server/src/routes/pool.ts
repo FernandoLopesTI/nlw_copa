@@ -4,27 +4,48 @@ import { prisma } from "../lib/prisma";
 import ShortUniqueId from "short-unique-id";
 import { z } from "zod";
 
-export async function poolRoutes(fastify:FastifyInstance){
-  fastify.get('/pools/count', async () =>{
-    const  result = await prisma.pool.count()
+export async function poolRoutes(fastify: FastifyInstance) {
+  fastify.get('/pools/count', async () => {
+    const result = await prisma.pool.count()
     return { count: result }
   })
 
-  fastify.post('/pools', async (request, reply) =>{
+  fastify.post('/pools', async (request, reply) => {
     const createPoolBody = z.object({
-        title:z.string(),
+      title: z.string(),
     })
-    const {title} =  createPoolBody.parse(request.body)
-    const generate = new ShortUniqueId({length: 6})
-    const  code = String(generate()).toUpperCase()
-    await prisma.pool.create({
+    const { title } = createPoolBody.parse(request.body)
+    const generate = new ShortUniqueId({ length: 6 })
+    const code = String(generate()).toUpperCase()
+    
+    try {
+      await request.jwtVerify()
+
+      await prisma.pool.create({
         data: {
-            title,
-            code
+          title,
+          code,
+          ownerId: request.user.sub,
+
+          participants: {
+            create: {
+              userId: request.user.sub,
+            }
+          }
         }
-    })
+      })
+
+    } catch (error) {
+      await prisma.pool.create({
+        data: {
+          title,
+          code
+        }
+      })
+    }
+
     return reply.status(201).send(code)
-})
+  })
 
 }
 
