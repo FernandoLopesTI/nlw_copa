@@ -17,9 +17,9 @@ async function bootstrap() {
         origin:true,
     })
 
-    // em producao precisa ser com variavel de ambiente
+    // em producao precisa ser com variavel de 
     await fastify.register(jwt , {
-        secret: 'nlwcopa',
+        secret: 'asdf',
     })
 
     await fastify.register(poolRoutes)
@@ -28,7 +28,7 @@ async function bootstrap() {
     await fastify.register(guessRoutes)
     await fastify.register(userRoutes)
     //start server
-    await fastify.listen({ port: 3333, /*host: '0.0.0.0'*/})
+    await fastify.listen({ port: 3333, host: '0.0.0.0'})
     
 }
 

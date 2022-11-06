@@ -41,6 +41,7 @@ export async function authRoutes(fastify:FastifyInstance){
       }
     })
 
+
     if (!user) {
       user = await prisma.user.create({
         data:{
@@ -62,6 +63,9 @@ export async function authRoutes(fastify:FastifyInstance){
 
     
 
+    console.log("aqui")
+    console.log({ token })
+    
     return { token }
   })
 }
