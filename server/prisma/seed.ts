@@ -26,7 +26,7 @@ async function main() {
 // console do navegador new Date().toISOString()
   await prisma.game.create({
     data:{
-      date: '2022-11-02T12:00:00.931Z',
+      date: '2022-11-08T12:00:00.931Z',
       firstTeamCountryCode: 'DE',
       secondTeamCountryCode: 'BR',
     
@@ -35,7 +35,7 @@ async function main() {
 
   await prisma.game.create({
     data:{
-      date: '2022-11-03T12:00:00.931Z',
+      date: '2022-11-07T12:00:00.931Z',
       firstTeamCountryCode: 'BR',
       secondTeamCountryCode: 'AR',
       guesses: {

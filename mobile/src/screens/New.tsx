@@ -22,7 +22,7 @@ export function New() {
     try {
       setIsPoolCreadede(true);
       await api.post('/pools', {
-        title
+        title: title.toUpperCase()
       })
       toast.show({
         title: 'Bolão Criado com sucesso',
