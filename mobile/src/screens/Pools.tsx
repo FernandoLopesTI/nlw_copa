@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { VStack, Icon, useToast, FlatList } from "native-base";
 import { Button } from "../components/Button";
 import { Octicons } from '@expo/vector-icons'
 import { Header } from "../components/Header";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation , useFocusEffect} from '@react-navigation/native';
 import { api } from "../services/api";
 import { Loading } from "../components/Loading";
 import { PoolCard, PoolCardPros } from "../components/PoolCard";
@@ -35,7 +35,7 @@ export function Pools() {
 
   }
 
-  useEffect(() => { fetchPools() }, [])
+  useFocusEffect(useCallback(() => { fetchPools() }, []))
 
   return (
     <VStack flex={1} bgColor="gray.900" >
